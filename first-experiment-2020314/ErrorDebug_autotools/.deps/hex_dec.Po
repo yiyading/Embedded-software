@@ -1,0 +1,3 @@
+hex_dec.o: hex_dec.c /usr/include/stdc-predef.h
+
+/usr/include/stdc-predef.h:

@@ -1,0 +1,3 @@
+dec_oct.o: dec_oct.c /usr/include/stdc-predef.h
+
+/usr/include/stdc-predef.h:
