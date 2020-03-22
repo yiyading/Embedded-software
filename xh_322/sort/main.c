@@ -25,7 +25,7 @@ int main()
 	int b[ len ];
 	int status, ascending = 0;
 	pid_t pid, cpid;
-	if((pid = vfork()) == -1){
+	if((pid = fork()) == -1){
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
