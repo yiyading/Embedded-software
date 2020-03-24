@@ -83,7 +83,82 @@ int main()
 ![使用vfork()创建子进程实验结果](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/vfork().png)<br>
 可以看到，结果为一个进程升序排序，一个进程降序排序。<br>
 ### 2、signal实验
-编写如下程序：
+编写如下程序：<br>
+①父进程程序如下，父进程向子进程发送信号<br>
 ```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<signal.h>
+#include<unistd.h>
+#include<wait.h>
 
+int main()
+{
+	pid_t pid;
+	pid = fork();
+	char* args[] = {"child", NULL};
+	int ret;
+
+	if(pid<0)
+	{
+		perror("fork error");
+		exit(1);
+	}
+	else if(pid == 0)
+	{
+		printf("This is the child process:\n");
+		printf("pid= %d, ppid= %d\n", getpid(), getppid());
+		execv("./child", args);
+	}
+	else{
+		sleep(1);
+		printf("This is the parent process:\n");
+		printf("pid= %d, ppid= %d\n", getpid(), getppid());
+		if ( (ret=kill(pid, SIGILL)) == 0 )
+			printf("parent: sent SIGILL to child\n");
+		sleep(1);
+		if ( (ret=kill(pid, SIGALRM)) == 0 )
+			printf("parent: sent SIGALRM to child\n");
+		sleep(1);
+		if ( (ret=kill(pid, SIGRTMIN)) == 0 )
+                        printf("parent: sent SIGRTMIN to child\n");
+                sleep(1);
+		if( (ret=kill(pid, SIGKILL)) == 0 )
+			printf("parent: sent SIGKILL to child\n");
+		waitpid(pid, NULL, 0);
+		exit(EXIT_SUCCESS);
+	}
+
+
+}
+```
+①子进程程序如下，子进程用pause()捕获信号信号并处理<br>
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<signal.h>
+#include<unistd.h>
+
+void handler(int signum)
+{
+	if(signum == SIGALRM ) printf("child: SIGALRM is captured\n");
+	if(signum == SIGILL ) printf("child: SIGAILL is captured\n");
+	if(signum == SIGTTOU ) printf("child: SIGTTOU is captured\n");
+	if(signum == SIGRTMIN ) printf("child: SIGRTMIN is captured\n");
+}
+int main()
+{
+	int flag;
+	signal(SIGALRM, handler);
+	signal(SIGILL, handler);
+	signal(SIGTTOU, handler);
+	signal(SIGRTMIN, handler);
+	//printf("child process is running");
+	alarm(3);
+	while(1)
+	{
+		pause();
+	}
+
+}
 ```
