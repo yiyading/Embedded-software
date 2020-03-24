@@ -14,7 +14,7 @@
 #### (1)实验过程
 编写如下所示的程序
 
-'''c
+```c
 #include "./barrel.h"
 #include "./char2int.h"
 #include<stdio.h>
@@ -76,4 +76,5 @@ int main()
 	exit(EXIT_SUCCESS);
 	return 0;
 }
-'''
+```
+
