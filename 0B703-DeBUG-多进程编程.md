@@ -61,7 +61,7 @@ int main()
 			ascending = 1;
 		}
 	else 
-		barrel(a, len,  b, 1);
+		barrel(a, len,  b, 1)                      ;
 	for(i =0; i< (sizeof(b)/sizeof(int)); i ++)
 	{
 		printf("%d, ", b[i]);
@@ -77,4 +77,9 @@ int main()
 	return 0;
 }
 ```
+程序中使用到了一个函数barrel()，是用于排序的函数，其第三个参数表示是降序排序还是升序排序，ascending为1时表示升序排序，ascending为0时表示降序排序。程序运行开始时，ascending=0，为降序排序，如果子进程和父进程共享内存，则在一个进程运行完成后会将ascending置1，程序运行结果是一个进程升序排序，一个进程降序排序。如果不共享内存，则两个进程都为降序排序。<br>
+下图为使用fork()函数创建子进程的程序运行结果：<br>
 ![使用fork()创建子进程实验结果](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/fork().png)
+下图为使用vfork()函数创建子进程的程序运行结果：<br>
+![使用vfork()创建子进程实验结果](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/vfork().png)
+可以看到，结果为一个进程升序排序，一个进程降序排序。<br>
