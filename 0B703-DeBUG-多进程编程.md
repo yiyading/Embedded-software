@@ -77,4 +77,4 @@ int main()
 	return 0;
 }
 ```
-![result](https://github.com/yiyading/Embedded-software/tree/master/xh_322/img/fork().png)
+![使用fork()创建子进程实验结果](https://github.com/yiyading/Embedded-software/tree/master/xh_322/img/fork().png)
