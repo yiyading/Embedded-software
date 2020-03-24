@@ -84,7 +84,7 @@ int main()
 可以看到，结果为一个进程升序排序，一个进程降序排序。<br>
 ### 2、signal实验
 编写如下程序：<br>
-①父进程程序如下，父进程向子进程发送信号<br>
+①父进程程序如下，父进程用kill()向子进程发送信号<br>
 ```c
 #include<stdio.h>
 #include<stdlib.h>
@@ -162,3 +162,5 @@ int main()
 
 }
 ```
+下图为的程序运行结果：<br>
+![signal实验结果](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/signal.png)<br>
