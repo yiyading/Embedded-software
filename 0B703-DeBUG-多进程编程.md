@@ -164,3 +164,4 @@ int main()
 ```
 下图为的程序运行结果：<br>
 ![signal实验结果](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/signal.png)<br>
+可以看到，子进程正确接受到了父进程发出的信号并用handler函数进行了处理，打印出了接收到的信号，并在最后由于接受到了父进程发出的SIGKILL信号而退出。<br>
