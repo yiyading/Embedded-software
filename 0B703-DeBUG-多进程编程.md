@@ -77,4 +77,4 @@ int main()
 	return 0;
 }
 ```
-![](https://github.com/yiyading/Embedded-software/tree/master/xh_322/img/fork().png)
+![result](https://github.com/yiyading/Embedded-software/tree/master/xh_322/img/fork().png)
