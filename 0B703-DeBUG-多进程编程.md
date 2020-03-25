@@ -165,4 +165,264 @@ int main()
 下图为的程序运行结果：<br>
 ![signal实验结果](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/signal.png)<br>
 可以看到，子进程正确接受到了父进程发出的信号并用handler函数进行了处理，打印出了接收到的信号，并在最后由于接受到了父进程发出的SIGKILL信号而退出。<br>
+ ### 3、pipe/fifo实验
+编写如下程序：<br>
+①服务器端程序：<br>
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<memory.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<signal.h>
+#define BUFFLEN 1000
 
+int main()
+{
+	pid_t pid;
+	int pfd[2];
+	char buff1[BUFFLEN];
+	char buff2[BUFFLEN];
+	//char message[]="communication is successful!";
+	int rdnum, wtnum, fd_wca, fd_wcb, fd_rca, fd_rcb;
+	int offst1, offst2=0;
+	int i=0;
+	int j = 2;
+	int res=0;
+	offst1 = 0;
+	memset(buff1, 0 ,sizeof(buff1));
+	memset(buff2, 0 ,sizeof(buff2));
+	if(pipe(pfd)<0)
+	{
+		perror("pipe error");
+		exit(1);
+	}
+	pid = fork();
+	if(pid<0)
+	{
+		perror("fork error");
+		exit(1);
+	}
+	else if(pid == 0)
+	{
+		close(pfd[1]);
+		while(1)
+		{
+			usleep(50*1000);
+			rdnum = read(pfd[0], buff1, 100);
+			printf("Server Child: received %d bytes from the Server Parent: %s \n", rdnum, buff1);
+		}
+		exit(0);
+	}
+	else
+	{
+		if (access("./WT_CLNTA", F_OK) == -1)
+		{
+			res = mkfifo("./WT_CLNTA", 0777);
+			if (res != 0)
+			{
+				fprintf(stderr, "Could not create fifo:w2a\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+		if (access("./RDF_CLNTA", F_OK) == -1)
+                {
+                        res = mkfifo("./RDF_CLNTA", 0777);
+                        if (res != 0)
+                        {
+                                fprintf(stderr, "Could not create fifo r2a\n");
+                                exit(EXIT_FAILURE);
+                        }
+                }
+
+		if (access("./WT_CLNTB", F_OK) == -1)
+                {
+                        res = mkfifo("./WT_CLNTB", 0777);
+                        if (res != 0)
+                        {
+                                fprintf(stderr, "Could not create fifo w2b\n");
+                                exit(EXIT_FAILURE);
+                        }
+                }
+
+		if (access("./RDF_CLNTB", F_OK) == -1)
+                {
+                        res = mkfifo("./RDF_CLNTB", 0777);
+                        if (res != 0)
+                        {
+                                fprintf(stderr, "Could not create fifo r2b\n");
+                                exit(EXIT_FAILURE);
+                        }
+                }
+
+		close(pfd[0]);
+		fd_wca = open("./WT_CLNTA", O_WRONLY);
+		fd_wcb = open("./WT_CLNTB", O_WRONLY);
+		fd_rca = open("./RDF_CLNTA", O_RDONLY);
+		fd_rcb = open("./RDF_CLNTB", O_RDONLY);
+		printf("Server: fd_wca= %d, fd_rca= %d \n", fd_wca, fd_rca);
+		while(j>0)
+		{
+			if( (rdnum = read( fd_rca, buff1 + offst1, BUFFLEN)) > 0 )
+			{
+				printf("Server: received %d bytes from ClientA\n", rdnum);
+				write(pfd[1], buff1 + offst1 , rdnum);
+				offst1 += rdnum;
+			}
+			if( (rdnum = read( fd_rcb, buff2 + offst2, BUFFLEN)) > 0 )
+			{
+				printf("Server: received %d bytes from ClientB\n", rdnum);
+				write(pfd[1], buff2 + offst2, rdnum);
+				offst2 += rdnum;
+			}
+			if(  i== 1)
+			{
+				printf("server has run 2 times\n");
+				printf("offst1 2 = %d\n", offst1);
+				i = 0;
+				if( offst1 != 0)
+				{
+					if( (wtnum = write(fd_wca, buff1, offst1)) != 0 )
+						printf("Server: write %d bytes to ClientA\n", wtnum);
+					memset(buff1, 0 ,sizeof(buff1));
+					offst1  = 0; 
+
+				}
+				if( offst2 != 0 )
+				{
+					write(fd_wcb, buff2, offst2);
+					memset(buff2, 0 ,sizeof(buff2));
+					offst2 = 0;
+				}
+			}
+
+			usleep(100*1000);
+			i ++;
+			j --;
+		}
+		close(pfd[0]);
+		close(fd_wcb);
+		close(fd_rcb);
+		close(fd_wca);
+		close(fd_rca);
+		kill(pid, SIGKILL);
+		exit(0);
+	}
+}
+```
+②客户端1程序：<br>
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<memory.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
+#include<wait.h>
+#include<signal.h>
+#include<wait.h>
+#define BUFFLEN 1000
+
+int main()
+{
+        pid_t pid;
+        int pfd[2];
+        char buff1[BUFFLEN];
+        int rdnum, fd_wca, fd_rca;
+	char message[]="ss";
+        int offst1=0;
+        int res=0;
+	int res2 =0;
+        memset(buff1, 0 ,sizeof(buff1));
+	if(pipe(pfd)<0)
+        {
+                perror("pipe error");
+                exit(1);
+        }
+        pid = fork();
+        if(pid<0)
+        {
+                perror("fork error");
+                exit(1);
+        }
+	else if(pid == 0)
+        {
+                printf("ClientA child\n");
+		close(pfd[1]);
+		//close(pfd[0]);
+		//exit(EXIT_SUCCESS);
+                for(int i=0; i<20; i++)
+                {
+			printf("************clienta child running\n");
+                        rdnum = read(pfd[0], buff1, 100);
+			if(rdnum != 0)
+                        	printf("ClietnA: read %d bytes from the Server: %s \n", rdnum, buff1);
+			//printf("*******");
+			usleep(100*1000);
+                }
+		close(pfd[0]);
+                exit(EXIT_SUCCESS);
+        }
+	 else
+        {	
+		close(pfd[0]);
+		printf("ClientA parent\n");
+		//write(pfd[1], "ssss", 4);
+		res = access("./WT_CLNTA", F_OK); 
+                if (res == -1)
+		{
+			kill(pid, SIGKILL);
+			exit(0);
+		}
+		res2 = access("./RDF_CLNTA", F_OK);
+		if ( res2 == -1)
+		{
+			kill(pid, SIGKILL);
+			exit(0);
+		}
+		printf("--------------------");
+                //fd_wca = open("./WT_CLNTA", O_RDONLY|O_NONBLOCK);
+                fd_rca = open("./RDF_CLNTA",O_WRONLY|O_NONBLOCK);
+		fd_wca = open("./WT_CLNTA", O_RDONLY|O_NONBLOCK);
+		printf("fd_wca = %d, fd_rca = %d \n",fd_wca,fd_rca);
+
+		write(fd_rca, message, 2);
+		for(int i =0; i < 2; i++ )
+		{
+			for(int j = 0; j<2; j++)
+			{
+				usleep(100*1000);
+				if( (rdnum = read( fd_wca, buff1 + offst1, BUFFLEN)) > 0 )
+				{
+					printf("ClientA: receive %d bytes\n", rdnum);
+					write(pfd[1], buff1+ offst1, rdnum);
+					offst1 += rdnum;
+					//usleep(100*1000);
+				}
+				message[0] = 'A' + j;
+				message[1] = ' ';
+				write(fd_rca, message, 2);
+				printf("ClientA: sent %s to Server\n", message);
+			}
+			if(offst1 != 0)
+			{
+				write(fd_rca, buff1, offst1);
+                                memset(buff1, 0 ,sizeof(buff1));
+                                offst1  = 0;
+			}
+		}
+		//close(pfd[1]);
+               	close(fd_wca);
+                close(fd_rca);
+		wait(NULL);
+		close(pfd[1]);
+		//kill(pid, SIGKILL);
+		exit(EXIT_SUCCESS);
+
+	}
+
+}
+```
