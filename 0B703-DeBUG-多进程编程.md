@@ -438,7 +438,7 @@ int main()
 (2) 对于FIFO，需要open去打开FIFO的读端或是写端的描述符。<br>
 * 如果open的时候没有指定O_NONBLOCK标志，且open的是读端时：如果不存在此FIFO的已经打开的写端时，open会一直阻塞到有FIFO的写端打开；如果已经存在此FIFO的打开的写端时，open会直接成功返回。<br>
 * 如果open的时候没有指定O_NONBLOCK标志，且open的是写端时：如果不存在此FIFO的已经打开的读端时，open会一直阻塞到有FIFO的读端打开；如果已经存在此FIFO的打开的读端时，open会直接成功返回。<br>
-* 
+<br>
 (3) 从FIFO或者空管道读写<br>
 * read时，读端fd没有指定O_NONBLOCK标志: 如果存在此FIFO或管道的已经打开的写端时，阻塞到FIFO或管道中有数据或者FIFO或管道的已经打开的写端全部被关闭为止。如果不存在此FIFO或管道的已经打开的写端时，read返回0；<br>
 * write时, 同read差不多，就不详述了。
