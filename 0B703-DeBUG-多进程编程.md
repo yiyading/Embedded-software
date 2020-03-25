@@ -168,6 +168,7 @@ int main()
  ### 3、pipe/fifo实验
 编写如下程序：<br>
 ①服务器端程序：<br>
+服务器程序从客户端A、客户端B的FIFO接收消息，然后先通过pipe发送给子进程打印出来，然后将从客户端A接收到的消息发送给客户端B，将从客户端B接收到的消息发送给客户端A。<br>
 ```c
 #include<stdio.h>
 #include<stdlib.h>
@@ -279,8 +280,8 @@ int main()
 			}
 			if(  i== 1)
 			{
-				printf("server has run 2 times\n");
-				printf("offst1 2 = %d\n", offst1);
+				//printf("server has run 2 times\n");
+				//printf("offst1 2 = %d\n", offst1);
 				i = 0;
 				if( offst1 != 0)
 				{
@@ -313,6 +314,7 @@ int main()
 }
 ```
 ②客户端1程序：<br>
+客户端程序每次将从服务器端接收到的数据通过pipe发送给子进程，然后将"A "或"B "发送给服务器端。<br>
 ```c
 #include<stdio.h>
 #include<stdlib.h>
@@ -426,3 +428,6 @@ int main()
 
 }
 ```
+③客户端2程序与客户端1程序类似，省略；<br>
+实验结果如下：<br>
+![pipe/fifo result]()
