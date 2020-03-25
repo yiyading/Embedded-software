@@ -428,7 +428,8 @@ int main()
 
 }
 ```
-③客户端2程序与客户端1程序类似，省略；<br>
+③客户端2程序与客户端1程序类似，省略；<br><br>
 实验结果如下：<br>
+可以看到，客户端成功发送信息"A "和"B "给服务器端，服务器端的子进程打印出了接收到的数据；服务器端成功发送信息给客户端，客户端的子进程打印出了接收到的数据；
 ![pipe/fifo result](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/sc1.png)<br>
 ![pipe/fifo result](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/sc2.png)<br>
