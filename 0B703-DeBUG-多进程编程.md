@@ -430,4 +430,5 @@ int main()
 ```
 ③客户端2程序与客户端1程序类似，省略；<br>
 实验结果如下：<br>
-![pipe/fifo result]()
+![pipe/fifo result](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/sc1.png)<br>
+![pipe/fifo result](https://github.com/yiyading/Embedded-software/blob/master/xh_322/img/sc2.png)<br>
