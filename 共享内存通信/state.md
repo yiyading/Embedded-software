@@ -25,3 +25,28 @@
 ```c
     void *shmat(int shm_id, const void *shm_addr, int shmflg);
 ```
+第一个参数，shm_id是由shmget()函数返回的共享内存标识。<br>
+
+第二个参数，shm_addr指定共享内存连接到当前进程中的地址位置，通常为空，表示让系统来选择共享内存的地址。<br>
+
+第三个参数，shm_flg是一组标志位，通常为0。<br>
+
+功时返回一个指向共享内存第一个字节的指针，如果调用失败返回-1。<br>
+
+## 3.shmdt()函数  --dt：detach
+该函数用于将共享内存从当前进程中分离。注意，将共享内存分离并不是删除它，只是使该共享内存对当前进程不再可用。它的原型如下：<br>
+```c
+int shmdt(const void *shmaddr);
+```
+参数shmaddr是shmat()函数返回的地址指针，调用成功时返回0，失败时返回-1。<br>
+
+## shmctl()函数  -- ctl：control
+与信号量的semctl()函数一样，用来控制共享内存，它的原型如下：<br>
+```c
+int shmctl(int shm_id, int command, struct shmid_ds *buf);
+```
+第一个参数，shm_id是shmget()函数返回的共享内存标识符。<br>
+
+第二个参数，command是要采取的操作，它可以取下面的三个值：<br>
+### 1.PC_STAT：把shmid_ds结构中的数据设置为共享内存的当前关联值，即用共享内存的当前关联值覆盖shmid_ds的值。<br>
+### 2.IPC_SET：如果进程有足够的权限，就把共享内存的当前关联值设置为shmid_ds结构中给出的值。<br>
