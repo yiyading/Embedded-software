@@ -48,5 +48,5 @@ int shmctl(int shm_id, int command, struct shmid_ds *buf);
 第一个参数，shm_id是shmget()函数返回的共享内存标识符。<br>
 
 第二个参数，command是要采取的操作，它可以取下面的三个值：<br>
-### 1.PC_STAT：把shmid_ds结构中的数据设置为共享内存的当前关联值，即用共享内存的当前关联值覆盖shmid_ds的值。<br>
-### 2.IPC_SET：如果进程有足够的权限，就把共享内存的当前关联值设置为shmid_ds结构中给出的值。<br>
+    1.PC_STAT：把shmid_ds结构中的数据设置为共享内存的当前关联值，即用共享内存的当前关联值覆盖shmid_ds的值。<br>
+    2.IPC_SET：如果进程有足够的权限，就把共享内存的当前关联值设置为shmid_ds结构中给出的值。<br>
