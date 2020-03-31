@@ -48,5 +48,26 @@ int shmctl(int shm_id, int command, struct shmid_ds *buf);
 第一个参数，shm_id是shmget()函数返回的共享内存标识符。<br>
 
 第二个参数，command是要采取的操作，它可以取下面的三个值：<br>
-    1.PC_STAT：把shmid_ds结构中的数据设置为共享内存的当前关联值，即用共享内存的当前关联值覆盖shmid_ds的值。<br>
-    2.IPC_SET：如果进程有足够的权限，就把共享内存的当前关联值设置为shmid_ds结构中给出的值。<br>
+1.PC_STAT：把shmid_ds结构中的数据设置为共享内存的当前关联值，即用共享内存的当前关联值覆盖shmid_ds的值。<br>
+2.IPC_SET：如果进程有足够的权限，就把共享内存的当前关联值设置为shmid_ds结构中给出的值。<br>
+
+第三个参数，buf是一个结构指针，它指向共享内存模式和访问权限的结构。<br>
+
+shmid_ds结构 至少包括以下成员：<br>
+```c
+struct shmid_ds
+{
+    uid_t shm_perm.uid;
+    uid_t shm_perm.gid;
+    mode_t shm_perm.mode;
+};
+```
+
+# 三、使用共享内存进行进程间通信
+以两个不相关的进程来说明进程间如何通过共享内存来进行通信。其中一个文件shmread.c创建共享内存，并读取其中的信息，另一个文件shmwrite.c向共享内存中写入数据。<br>
+
+为了方便操作和数据结构的统一，为这两个文件定义了相同的数据结构，定义在文件shmdata.h中。结构shared_use_st中的written作为一个可读或可写的标志，非0：表示可读，0：表示可写，text则是内存中的文件。
+
+[shmadata.h](https://github.com/yiyading/Embedded-software/blob/master/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/shmdata.h)
+[shmread.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/shmread.c)
+[shmwrite.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/shmwrite.c)
