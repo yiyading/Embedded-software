@@ -37,7 +37,7 @@ int main(int argc, char **argv){
 		// 向共享内存中写入数据
 		printf("enter some text: ");
 		fgets(buffer, BUFSIZ, stdin);
-		strncpy(shared->text, buffer, TEXT_SZ);
+		strncpy(shared->text, buffer, TEXT_SZ); // 将buffer中前TEXT_SZ个字符复制到share->text中
 
 		// 写完数据，设置written使共享内存段可读
 		shared->written = 1;

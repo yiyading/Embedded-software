@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     printf("\nMemory attached at %X\n", (int)shm);
  
     // 设置共享内存
-    shared = (struct shared_use_st*)shm; // 注意：shm有点类似通过 malloc() 获取到的内存，所以这里需要做个 类型强制转换
+    shared = (struct shared_use_st*)shm; // 注意：shm有点类似通过 malloc() 获取到的内存，所以这里需要做个类型强制转换
     shared->written = 0;
     while (1) // 读取共享内存中的数据
     {
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
             // 输入了 end，退出循环（程序）
             if (strncmp(shared->text, "end", 3) == 0)
             {
-                break;
+                break;	// break跳出while和for循环
             }
         }
         else // 有其他进程在写数据，不能读取数据

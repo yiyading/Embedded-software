@@ -1,4 +1,4 @@
-shmread.exe: shmdata.h shmread.c
+shmread.exe: shmdata.h shmread.c shmwrite.exe
 	gcc -Wall shmread.c -o shmread.exe
 
 shmwrite.exe: shmdata.h shmwrite.c
