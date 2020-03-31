@@ -69,5 +69,7 @@ struct shmid_ds
 为了方便操作和数据结构的统一，为这两个文件定义了相同的数据结构，定义在文件shmdata.h中。结构shared_use_st中的written作为一个可读或可写的标志，非0：表示可读，0：表示可写，text则是内存中的文件。
 
 [shmadata.h](https://github.com/yiyading/Embedded-software/blob/master/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/shmdata.h)
+
 [shmread.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/shmread.c)
+
 [shmwrite.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E9%80%9A%E4%BF%A1/shmwrite.c)
