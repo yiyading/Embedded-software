@@ -1,4 +1,6 @@
-child: child.c
-	gcc child.c -o child
+child: child.c parent
+	gcc -o $@ $<
 parent: parent.c
-	gcc parent.c -o parent
+	gcc -o $@ $<
+
+

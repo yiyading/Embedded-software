@@ -1,6 +1,6 @@
 all: server clienta clientb
 	
-server: server.c 
+server: server.c  
 	gcc -Wall server.c -o server
 clienta: clienta.c
 	gcc -Wall clienta.c -o clienta

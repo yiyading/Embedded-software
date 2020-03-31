@@ -12,6 +12,8 @@ void handler(int signum)
 }
 int main()
 {
+	printf("child-fun's process pid is %d\n", getpid());
+
 	int flag;
 	signal(SIGALRM, handler);
 	signal(SIGILL, handler);

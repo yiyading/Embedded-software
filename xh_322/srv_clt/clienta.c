@@ -10,36 +10,27 @@
 #include<wait.h>
 #define BUFFLEN 1000
 
-int main()
-{
-        pid_t pid;
-        int pfd[2];
-        char buff1[BUFFLEN];
+int main(){
+        pid_t pid; int pfd[2]; char buff1[BUFFLEN];
         int rdnum, fd_wca, fd_rca;
 	char message[]="ss";
-        int offst1=0;
-        int res=0;
-	int res2 =0;
+        int offst1=0, res=0, int res2 =0;
         memset(buff1, 0 ,sizeof(buff1));
-	if(pipe(pfd)<0)
-        {
+	if(pipe(pfd)<0){
                 perror("pipe error");
                 exit(1);
         }
+
         pid = fork();
-        if(pid<0)
-        {
+        if(pid<0){
                 perror("fork error");
                 exit(1);
-        }
-	else if(pid == 0)
-        {
+        }else if(pid == 0){
                 printf("ClientA child\n");
 		close(pfd[1]);
 		//close(pfd[0]);
 		//exit(EXIT_SUCCESS);
-                for(int i=0; i<20; i++)
-                {
+                for(int i=0; i<20; i++){
 			printf("************clienta child running\n");
                         rdnum = read(pfd[0], buff1, 100);
 			if(rdnum != 0)

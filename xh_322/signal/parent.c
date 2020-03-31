@@ -22,8 +22,8 @@ int main()
 		printf("pid= %d, ppid= %d\n", getpid(), getppid());
 		execv("./child", args);
 	}
-	else{
-		sleep(1);
+	else if(pid > 0){
+		sleep(5);
 		printf("This is the parent process:\n");
 		printf("pid= %d, ppid= %d\n", getpid(), getppid());
 		if ( (ret=kill(pid, SIGILL)) == 0 )
@@ -37,7 +37,7 @@ int main()
                 sleep(1);
 		if( (ret=kill(pid, SIGKILL)) == 0 )
 			printf("parent: sent SIGKILL to child\n");
-		waitpid(pid, NULL, 0);
+//		waitpid(pid, NULL, 0);
 		exit(EXIT_SUCCESS);
 	}
 
