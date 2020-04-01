@@ -1,3 +1,5 @@
+// 该程序用来测试main函数的参数功能
+
 #include<stdio.h>
 
 // argc表示传入main函数参数的个数
