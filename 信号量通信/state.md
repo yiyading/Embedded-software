@@ -91,10 +91,18 @@ union semun {
 # 五、运行
 ## 1.使用makefile文件编译
 ## 2.运行结果如下
-[Image text](https://github.com/yiyading/Embedded-software/blob/master/%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%80%9A%E4%BF%A1/img/WeChat%20Screenshot_20200401173846.png)<br>
+[运行结果](https://github.com/yiyading/Embedded-software/blob/master/%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%80%9A%E4%BF%A1/img/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png)<br>
 
 # 六、例子分析
 同时运行一个程序的两个实例，注意第一次运行时，要加上一个字符作为参数，例如本例中的字符‘O’，它用于区分是否为第一次调用，同时这个字符输出到屏幕中。因为每个程序都在其进入临界区后和离开临界区前打印一个字符，所以每个字符都应该成对出现，正如你看到的上图的输出那样。在main函数中循环中我们可以看到，每次进程要访问stdout（标准输出），即要输出字符时，每次都要检查信号量是否可用（即stdout有没有正在被其他进程使用）。所以，当一个进程A在调用函数semaphore_p()进入了临界区，输出字符后，调用sleep()时，另一个进程B可能想访问stdout，但是信号量的P请求操作失败，只能挂起自己的执行，当进程A调用函数semaphore_v()离开了临界区，进程B马上被恢复执行。然后进程A和进程B就这样一直循环了10次。<br>
 
 # 七、对比例子————进程间的资源竞争
+函数源码如下：<br>
 
+[normalprint.c](https://github.com/yiyading/Embedded-software/blob/master/%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%80%9A%E4%BF%A1/normalprint.c_)<br>
+
+运行结果如下：<br>
+[运行结果](https://github.com/yiyading/Embedded-software/blob/master/%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%80%9A%E4%BF%A1/img/normalprint%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png)<br>
+
+* 例子分析：<br>
+从上面的输出结果，我们可以看到字符‘X’和‘O’并不像前面的例子那样，总是成对出现，因为当第一个进程A输出了字符后，调用sleep休眠时，另一个进程B立即输出并休眠，而进程A醒来时，再继续执行输出，同样的进程B也是如此。所以输出的字符就是不成对的出现。这两个进程在竞争stdout这一共同的资源。通过两个例子的对比，我想信号量的意义和使用应该比较清楚了。<br>
