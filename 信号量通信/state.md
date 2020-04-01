@@ -89,4 +89,6 @@ union semun {
 源文件为[seml.c](https://github.com/yiyading/Embedded-software/blob/master/%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%80%9A%E4%BF%A1/seml.c)<br>
 
 # 五、运行
-
+## 1.使用makefile文件编译
+## 2.运行结构如下
+[Image text](https://github.com/yiyading/Embedded-software/blob/master/%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%80%9A%E4%BF%A1/img/WeChat%20Screenshot_20200401173846.png)
