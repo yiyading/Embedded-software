@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		}
 		
 		// 设置要输出到屏幕的信息，即其参数的第一个字符
-		message = argv[1][0];
+		message = argv[1][0] ;
 		sleep(2);
 	}
 
