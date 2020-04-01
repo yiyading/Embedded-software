@@ -13,7 +13,7 @@ struct msg_st
 int main(int argc, char **argv)
 {
 	int msgid = -1;
-	struct msg_st data;
+	struct msg_st* data;
 	long int msgtype = 0;	// 注意1
 
 	// 建立消息队列
@@ -29,16 +29,17 @@ int main(int argc, char **argv)
 	// 从队列中获得消息，直到遇到end
 	int i = 0;
 	while(1){
-		i = msgrcv(msgid, (void *)data, BUFSIZ, msgtype, 0);
+	//	i = msgrcv(msgid, (void *)data, BUFSIZ, msgtype, 0);
+		msgrcv(msgid, data, BUFSIZ, msgtype, 0);
 		if(i == -1){
 			// Linux中系统调用的错误都存储于 errno中，errno由操作系统维护，存储就近发生的错误，即下一次的错误码会覆盖掉上一次的错误。
 			fprintf(stderr, "msgrcv failed width error: %d", errno);
 			exit(EXIT_FAILURE);
 		}
 
-		printf("You wrote is %s\n", data.text);
+		printf("You wrote is %s\n", data->text);
 
-		if(strncmp(data.text, "end", 3) == 0)
+		if(strncmp(data->text, "end", 3) == 0)
 			break;
 	}
 	

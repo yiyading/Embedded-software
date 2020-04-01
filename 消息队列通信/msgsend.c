@@ -13,7 +13,7 @@ struct msg_st{
 };
 
 int main(int argc, char *argv[]){
-	struct msg_st data;
+	struct msg_st* data;
 	char buffer[BUFSIZ];
 	int msgid = -1;
 
@@ -24,15 +24,18 @@ int main(int argc, char *argv[]){
 		exit(EXIT_FAILURE);
 	}
 
+	int i = 0;
 	// 向消息队列中写信息，直到写入end
 	while(1){
 		printf("Enter some text: ");
 		fgets(buffer, BUFSIZ, stdin);
-		data.msg_type = 1;
-		strcpy(data.text, buffer);
+		data->msg_type = 1;
+		strcpy(data->text, buffer);
 
 		// 像队列里发送数据
-		if(msgsnd(msgid, (void *)data, MAX_TEXT, 0) == -1){
+	//	i = msgsnd(msgid, (void *)data, MAX_TEXT, 0);
+		msgsnd(msgid, data, MAX_TEXT, 0);
+		if(i == -1){
 			fprintf(stderr, "msgsend(msgid) is failed\n");	
 			exit(EXIT_FAILURE);
 		}
