@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
 	// 传入的第一个参数是执行文件的绝对路径
 	for( ; i<argc; i++)
-		printf("%s\n", argv[i]);
+		printf("%s\n", *argv[i]);
 
 	return 0;
 }
