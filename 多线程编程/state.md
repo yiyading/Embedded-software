@@ -85,7 +85,7 @@ int pthread_join(pthread_t thread,void **thread_ret);
 
 函数原型：<br>
 ```c
-void pthread_exit(void* retval)
+void pthread_exit(void* retval);
 ```
 返回值存储在void \*retval中。<br>
 
