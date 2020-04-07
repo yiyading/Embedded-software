@@ -153,9 +153,31 @@ int sem_post(sem_t *sem);
 互斥锁只有两个状态，上锁和解锁。在同一时刻只能有一个线程拥有互斥锁，拥有上锁状态的线程能够对共享资源进行操作。<br>
 若其他线程希望上锁一个互斥锁，则挂起等待，直到上锁的线程释放掉互斥锁为止。<br>
 
-> 所需头文件 ***#include<pthread.h>***
-> 互斥锁初始化：  pthread_mutex_init()
-> 互斥锁上锁：    pthread_mutex_lock()
-> 互斥锁判断上锁：pthread_mutex_trylock()
-> 互斥锁接锁：    pthread_mutex_unlock()
-> 消除互斥锁：    pthread_mutex_destroy()
+> 所需头文件 ***#include<pthread.h>***<br>
+> 互斥锁初始化：  pthread_mutex_init()<br>
+> 互斥锁上锁：    pthread_mutex_lock()<br>
+> 互斥锁判断上锁：pthread_mutex_trylock()<br>
+> 互斥锁接锁：    pthread_mutex_unlock()<br>
+> 消除互斥锁：    pthread_mutex_destroy()<br>
+
+## 1.pthrad_mutex_init()函数
+互斥锁初始化<br>
+成功返回0，失败返回错误码.<br>
+```
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *mutexattr)
+```
+第一个参数：互斥锁
+第二个参数：PTHREAD_MUTEX_INITIALIZER：创建快速互斥锁
+            PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP：创建递归互斥锁
+            PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP：创建检错互斥锁
+
+## 2.对互斥锁进行操作的函数
+函数传入值 mutex：互斥锁<br>
+函数返回值：成功：0 出错：-1<br>
+> int pthread_mutex_lock(pthread_mutex_t \*mutex,) ***互斥锁上锁，假如互斥锁已经上锁，则一直等待到被解锁！***<br>
+
+> int pthread_mutex_trylock(pthread_mutex_t \*mutex,) ***互斥锁上锁，假如互斥锁已经上锁，无等待，但返回错误***
+
+> int pthread_mutex_unlock(pthread_mutex_t \*mutex,) ***互斥锁解锁***
+
+> int pthread_mutex_destroy(pthread_mutex_t \*mutex,) ***删除互斥锁，前提是互斥锁当前没有被锁住***
