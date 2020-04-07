@@ -143,3 +143,6 @@ V操作，释放一个信号量，唤醒正在等待该信号量的线程，如�
 ```c
 int sem_post(sem_t *sem);
 ```
+
+***源码实列***<br>
+[sem_pthread](https://github.com/yiyading/Embedded-software/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/sem_pthread.c)<br>
