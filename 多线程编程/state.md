@@ -24,7 +24,7 @@
 # 内核线程
 * 由内核创建和撤销<br>
 
-* 只运行在**内核态(Kernel Mode**<br>
+* 只运行在**内核态(Kernel Modei)**<br>
 
 * 只使用大于PAGE_OFFSET的线性地址空间<br>
 
@@ -88,3 +88,8 @@ int pthread_join(pthread_t thread,void **thread_ret);
 void pthread_exit(void* retval);<br>
 ```
 返回值存储在void *retval中。<br>
+
+## 创建线程的源代码
+[pthread.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/pthread.c)
+
+## POSIX信号量
