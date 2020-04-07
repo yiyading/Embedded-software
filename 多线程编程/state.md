@@ -181,3 +181,6 @@ int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *mutexa
 > int pthread_mutex_unlock(pthread_mutex_t \*mutex,) ***互斥锁解锁***
 
 > int pthread_mutex_destroy(pthread_mutex_t \*mutex,) ***删除互斥锁，前提是互斥锁当前没有被锁住***
+
+***源码实例***
+[mutex.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/mutex_pthread.c)<br>
