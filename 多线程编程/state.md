@@ -146,3 +146,16 @@ int sem_post(sem_t *sem);
 
 ***源码实列***<br>
 [sem_pthread](https://github.com/yiyading/Embedded-software/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/sem_pthread.c)<br>
+
+# 三.POSIX互斥锁
+由于线程共享进程的资源和地址空间，因此在对这些资源进行操作时，必须考虑到线程间资源访问的同步与互斥问题。与信号量相比，互斥锁更适合用于同时可用的资源是唯一的情况；信号量更适合用于同时可用的资源为多个的情况。<br>
+
+互斥锁只有两个状态，上锁和解锁。在同一时刻只能有一个线程拥有互斥锁，拥有上锁状态的线程能够对共享资源进行操作。<br>
+若其他线程希望上锁一个互斥锁，则挂起等待，直到上锁的线程释放掉互斥锁为止。<br>
+
+> 所需头文件 ***#include<pthread.h>***
+> 互斥锁初始化：  pthread_mutex_init()
+> 互斥锁上锁：    pthread_mutex_lock()
+> 互斥锁判断上锁：pthread_mutex_trylock()
+> 互斥锁接锁：    pthread_mutex_unlock()
+> 消除互斥锁：    pthread_mutex_destroy()
