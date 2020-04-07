@@ -38,7 +38,7 @@ pthread类函数的头文件及链接库如下：<br>
 > #include<semaphore.h><br>
 > gcc -o mycode mycode.c -lpthread -lm
 
-# 一、创建线程
+# 一.创建线程
 ## 1. pthread_creat() 
 > 线程的创建，类似于fork()，vfork()，但创建线程。<br>
 > clone()创建的是一个LWP，内核可见，由内核调度。<br>
@@ -85,11 +85,61 @@ int pthread_join(pthread_t thread,void **thread_ret);
 
 函数原型：<br>
 ```c
-void pthread_exit(void* retval);<br>
+void pthread_exit(void* retval)
 ```
-返回值存储在void *retval中。<br>
+返回值存储在void \*retval中。<br>
 
-## 创建线程的源代码
+## 4.创建线程的源代码
 [pthread.c](https://github.com/yiyading/Embedded-software/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/pthread.c)
 
-## POSIX信号量
+# 二、POSIX信号量
+信号量和互斥锁（mutex）的区别：互斥锁只允许一个线程进入临界区，而信号量允许多个线程同时进入临界区。<br>
+
+使用信号量同步，需要包含头文件 #include<semaphore.h>.<br>
+
+## 1.sem_init()函数
+创建一个信号量并初始化它的值.<br>
+成功返回 0；错误返回 -1，设置 errno.<br>
+
+```c
+int sem_init(sem_t *sem, int pshared, unsigned int value);
+```
+第一个参数：要初始化的信号量.<br>
+第二个参数pshared：pshared=0 用于同一进程中线程间的同步；pshared>0 用于进程间的同步.<br>
+第三个参数value：信号量的初值.<br>
+
+## 2.sem_getvalu()函数
+```c
+int sem_getvalue(sem_t *sem, int *sval);
+```
+取回信号量sem的当前值，把该值保存到sval中.<br>
+成功返回 0；错误返回 -1，设置 errno.<br>
+
+## 3.sem_destroy()函数
+```c
+int sem_destroy(sem_t *sem);
+```
+删除一个信号量，***前提是该信号量没有被占用***.<br>
+成功返回 0；错误返回 -1，设置 errno.<br>
+
+## 4.sem_wait()函数
+P操作，等待获取一个信号量，这是一个组塞性质的函数，测试所指定信号量的值。若sem>0，它减1并立即返回；若sem=0，则睡眠直到sem>0，然后减1返回。<br>
+成功返回 0；错误返回 -1，设置 errno。<br>
+
+```c
+int sem_wait(sem_t *sem);
+```
+
+***与sem_wait()类似的一个函数***<br>
+```c
+int sem_trywait(sem_t *sem);
+```
+P操作，获取一个信号量，这是一个非阻塞性的函数，测试所指定信号量的值，若sem>0，它减1并立即返回；***若sem=0，不是睡眠等待，而是立即返回一个错误标志***.<br>
+成功返回 0；错误返回 -1，并设置 errno=EAGAIN.<br>
+
+## 5.sem_post()函数
+V操作，释放一个信号量，唤醒正在等待该信号量的线程，如果有多个线程等待，由调度机制决定唤醒哪一个。<br>
+成功返回 0；错误返回 -1，设置 errno
+```c
+int sem_post(sem_t *sem);
+```
