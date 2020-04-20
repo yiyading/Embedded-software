@@ -100,4 +100,27 @@ target remote 192.168.0.22:7788
 continue
 ## 四、实验总结
 1、ubuntu18.04编译gdb6.6会出错，我们不知道怎么解决，将gdb换成gdb 8.0后并在configure中加入--disable-werror，再次编译就可以成功编译<br>
-2、
+2、host端出现 Remote 'g' packet reply is too long的问题：<br>
+修改gdb/remote.c文件，屏蔽process_g_packet函数中的下列两行：<br>
+```c
+if (buf_len > 2 * rsa->sizeof_g_packet)
+
+error (_(“Remote ‘g’ packet reply is too long: %s”), rs->buf);
+```
+在后面添加:<br>
+```c
+if (buf_len > 2 * rsa->sizeof_g_packet) {
+      rsa->sizeof_g_packet = buf_len ;
+      for (i = 0; i < gdbarch_num_regs (gdbarch); i++)
+      {
+         if (rsa->regs[i].pnum == -1)
+         continue;
+
+         if (rsa->regs[i].offset >= rsa->sizeof_g_packet)
+         rsa->regs[i].in_g_packet = 0;
+         else
+         rsa->regs[i].in_g_packet = 1;
+      }
+   }
+ ```
+3、如果使用 arm-linux-gnueabihf-gcc的交叉编译工具，需要在./configure时配置--target=arm-linux-gnueabihf <br>
