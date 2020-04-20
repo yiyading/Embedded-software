@@ -71,8 +71,20 @@ wget http://ftp.gnu.org/gnu/gdb/gdb-8.0.tar.gz
 tar -zxvf gdb-8.0.tar.gz
 cd gdb-8.0.tar
 ```
-编译出arm-linux-gdb，安装在host端<br>
-②编译出gdbserver<br>
-③利用arm-linux-gdb和gdbserver调试程序
-<br>
+编译出arm-linux-gdb，安装在host端:<br>
+```bash
+./configure --target=arm-linux --prefix=/xxx/arm-gdb
+make
+make install
+```
+②编译出gdbserver:<br>
+```bash
+cd /home/xiehao/gdb-8.0/gdb/gdbserver
+./configure --target=arm-linux-gnueabihf --host=arm-linux-gnueabihf
+make CC=arm-linux-gnueabihf-gcc
+```
+③利用arm-linux-gdb和gdbserver调试程序<br>
+
 ## 四、实验总结
+1、ubuntu18.04编译gdb6.6会出错，我们不知道怎么解决，将gdb换成gdb 8.0后并在configure中加入--disable-werror，再次编译就可以成功编译<br>
+2、
