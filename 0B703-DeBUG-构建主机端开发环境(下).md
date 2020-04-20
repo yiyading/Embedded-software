@@ -79,6 +79,7 @@ cd gdb-8.0.tar
 make
 make install
 ```
+![arm-linux-gdb](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/arm-linux-gdb.png)<br>
 添加环境变量<br>
 ```bash
 export PATH=$PATH:/usr/local/arm-gdb/bin
@@ -94,6 +95,7 @@ make CC=arm-linux-gnueabihf-gcc
 ```bash
 gdbserver :7788 myproj
 ```
+![gdbserver](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/gdbserver.png)<br>
 之后在host端运行arm-linux-gdb
 ```
 arm-linux-gdb myproj
@@ -101,7 +103,7 @@ arm-linux-gdb myproj
 target remote 192.168.0.22:7788<br>
 continue<br>
 host端运行gdb卡死在这里，不知道如何解决：<br>
-
+![host端调试结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/arm-linuxgdb.png)<br>
 ## 四、实验总结
 1、ubuntu18.04编译gdb6.6会出错，我们不知道怎么解决，将gdb换成gdb 8.0后并在configure中加入--disable-werror，再次编译就可以成功编译<br>
 2、host端出现 Remote 'g' packet reply is too long的问题：<br>
