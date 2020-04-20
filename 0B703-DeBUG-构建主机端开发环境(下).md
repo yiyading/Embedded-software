@@ -88,7 +88,16 @@ cd /home/xiehao/gdb-8.0/gdb/gdbserver
 make CC=arm-linux-gnueabihf-gcc
 ```
 ③利用arm-linux-gdb和gdbserver调试程序<br>
-
+首先在树莓派上运行gdbserver:
+```bash
+gdbserver :7788 myproj
+```
+之后在host端运行arm-linux-gdb
+```
+arm-linux-gdb myproj
+```
+target remote 192.168.0.22:7788
+continue
 ## 四、实验总结
 1、ubuntu18.04编译gdb6.6会出错，我们不知道怎么解决，将gdb换成gdb 8.0后并在configure中加入--disable-werror，再次编译就可以成功编译<br>
 2、
