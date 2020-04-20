@@ -42,6 +42,8 @@ static domain_name_servers=192.168.0.1
 ```
 ③SSH连接树莓派<br>
 用XShell软件通过SSH连接树莓派，首先设置树莓派IP为192.168.0.22，选择协议为SSH，然后设置登录用户名和密码为pi，即可连接树莓派。<br>
+![ssh配置](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/ssh.png)<br>
+![ssh连接结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/ssh2.png)<br>
 <br>
 2、主机端linux下载安装树莓派的交叉编译工具链<br>
 ①下载树莓派交叉编译工具<br>
@@ -96,8 +98,10 @@ gdbserver :7788 myproj
 ```
 arm-linux-gdb myproj
 ```
-target remote 192.168.0.22:7788
-continue
+target remote 192.168.0.22:7788<br>
+continue<br>
+host端运行gdb卡死在这里，不知道如何解决：<br>
+
 ## 四、实验总结
 1、ubuntu18.04编译gdb6.6会出错，我们不知道怎么解决，将gdb换成gdb 8.0后并在configure中加入--disable-werror，再次编译就可以成功编译<br>
 2、host端出现 Remote 'g' packet reply is too long的问题：<br>
