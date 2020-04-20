@@ -43,5 +43,13 @@ static domain_name_servers=192.168.0.1
 ③SSH连接树莓派<br>
 用XShell软件通过SSH连接树莓派，首先设置树莓派IP为192.168.0.22，选择协议为SSH，然后设置登录用户名和密码为pi，即可连接树莓派。<br>
 3、主机端linux下载安装树莓派的交叉编译工具链<br>
-交叉编译工具没下载完，明天一定写完
+①下载树莓派交叉编译工具<br>
+```bash
+git clone git://github.com/raspberrypi/tools.git
+cd /home/xiehao/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
+ls
+```
+![工具下载](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/crosslink.png)<br>
+②把编译器路径加入到系统环境变量
+
 ## 四、实验总结
