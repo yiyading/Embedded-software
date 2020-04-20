@@ -50,6 +50,15 @@ cd /home/xiehao/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-
 ls
 ```
 ![工具下载](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/crosslink.png)<br>
-②把编译器路径加入到系统环境变量
-
+②把编译器路径加入到系统环境变量<br>
+```bash
+export PATH=$PATH:/home/xiehao/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
+```
+③用交叉编译工具 arm-linux-gnueabihf-gcc 编译程序<br>
+继续使用之前的排序程序，编写makefile:<br>
+![makefile](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/makefilw.png)<br>
+make之后在host端无法运行，将可执行文件复制到树莓派上则可以运行：<br>
+![make结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/make.png)<br>
+![主机端运行结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/proj.png)<br>
+![树莓派运行结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/raspberry.png)<br>
 ## 四、实验总结
