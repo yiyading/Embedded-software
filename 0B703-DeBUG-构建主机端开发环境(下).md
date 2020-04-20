@@ -42,6 +42,7 @@ static domain_name_servers=192.168.0.1
 ```
 ③SSH连接树莓派<br>
 用XShell软件通过SSH连接树莓派，首先设置树莓派IP为192.168.0.22，选择协议为SSH，然后设置登录用户名和密码为pi，即可连接树莓派。<br>
+<br>
 3、主机端linux下载安装树莓派的交叉编译工具链<br>
 ①下载树莓派交叉编译工具<br>
 ```bash
@@ -57,8 +58,9 @@ export PATH=$PATH:/home/xiehao/raspi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnue
 ③用交叉编译工具 arm-linux-gnueabihf-gcc 编译程序<br>
 继续使用之前的排序程序，编写makefile:<br>
 ![makefile](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/makefilw.png)<br>
-make之后在host端无法运行，将可执行文件复制到树莓派上则可以运行：<br>
+make之后生成可执行文件，在host端无法运行，将可执行文件复制到树莓派上则可以运行：<br>
 ![make结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/make.png)<br>
 ![主机端运行结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/proj.png)<br>
 ![树莓派运行结果](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/raspberry.png)<br>
+<br>
 ## 四、实验总结
