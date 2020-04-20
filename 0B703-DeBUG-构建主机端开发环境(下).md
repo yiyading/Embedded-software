@@ -77,6 +77,10 @@ cd gdb-8.0.tar
 make
 make install
 ```
+添加环境变量<br>
+```bash
+export PATH=$PATH:/usr/local/arm-gdb/bin
+```
 ②编译出gdbserver:<br>
 ```bash
 cd /home/xiehao/gdb-8.0/gdb/gdbserver
