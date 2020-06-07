@@ -256,6 +256,7 @@ sudo apt-get install xfsprogs
 ②先在sd卡(/dev/mmcblk0)上准备一个分区来创建XFS。<br>
 ```bash
 sudo fdisk /dev/mmcblk0
+```
 ③格式化分区为XFS，使用mkfs.xfs命令。
 如果已有其他文件系统创建在此分区，必须加上"-f"参数来覆盖它。<br>
 ```bash
