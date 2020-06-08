@@ -239,15 +239,15 @@ sudo mkdir /mnt/nfs
 
 ![Linux架构目标操作系统29](https://github.com/yiyading/day-read/blob/master/img/Linux%E6%9E%B6%E6%9E%84%E7%9B%AE%E6%A0%87%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F29.png)
 
-4、xfs文件系统<br>
-4.1 xfs文件系统<br>
+## 4、xfs文件系统<br>
+### 4.1 xfs文件系统<br>
 	flash作为嵌入式系统的主要存储媒介，写入操作只能把对应的位置的1修改成0，而不能
 把0修改为1，一般情况下，向flash写入内容时，需要擦除对应的存储区间，这种擦除是以block为
 单位进行的。传统的文件系统如ext2、ntfs等都是针对机械式硬盘设计的，用作flash文件系统会
 有诸多弊端。<br>
 	xfs采用日志记录功能，每当发生文件系统更改，xfs都会将新属性信息记录到文件系统的保留区域内。
 只有元数据写入日志后，文件系统才能将实际数据写入到磁盘。<br>
-4.2 创建和挂载XFS文件系统<br>
+### 4.2 创建和挂载XFS文件系统<br>
 ①首先，需要安装XFS系统工具集用以执行许多XFS相关的管理任务。
 （例如：格式化，扩展，修复，设置配额，改变参数等）<br>
 ```bash
@@ -272,9 +272,9 @@ sudo mount -t xfs /dev/mmcblk0p5 /mnt/mmcblk0p5
 ```
 ⑤加入下列行到/etc/fstab，启动时自动挂载XFS分区在/mnt/mmcblk0p5上：<br>
 
-/dev/mmcblk0p5 /mnt/mmcblk0p5 xfs defaults 0 0
-5、GDB-GDBServer交叉调试<br>
-5.1交叉调试<vr>
+/dev/mmcblk0p5 /mnt/mmcblk0p5 xfs defaults 0 0<br>
+## 5、GDB-GDBServer交叉调试<br>
+### 5.1交叉调试<vr>
 ①首先在树莓派上运行gdbserver:
 ```bash
 gdbserver :7788 myproj
