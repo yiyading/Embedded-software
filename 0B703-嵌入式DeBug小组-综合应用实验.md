@@ -93,6 +93,18 @@ sudo mount -t xfs /dev/mmcblk0p5 /mnt/mmcblk0p5
 ```bash
  df -Th /mnt/mmcblk0p5
 ```
+```c
+#include<fcntl.h>
+#include<stdio.h>
+int main()
+{
+	FILE *fp;
+	fp = fopen("test.txt","w");
+	fprintf(fp,"Hello World!\n");
+
+}
+
+```
 ![挂载文件系统](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/df-TH.png)<br>
 ⑤加入下列行到/etc/fstab，启动时自动挂载XFS分区在/mnt/mmcblk0p5上：<br>
 
