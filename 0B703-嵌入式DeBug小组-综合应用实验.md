@@ -93,6 +93,7 @@ sudo mount -t xfs /dev/mmcblk0p5 /mnt/mmcblk0p5
 ```bash
  df -Th /mnt/mmcblk0p5
 ```
+![挂载文件系统](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/df-TH.png)<br>
 ```c
 #include<fcntl.h>
 #include<stdio.h>
@@ -105,7 +106,6 @@ int main()
 }
 
 ```
-![挂载文件系统](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/df-TH.png)<br>
 ⑤加入下列行到/etc/fstab，启动时自动挂载XFS分区在/mnt/mmcblk0p5上：<br>
 
 /dev/mmcblk0p5 /mnt/mmcblk0p5 xfs defaults 0 0<br>
