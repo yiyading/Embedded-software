@@ -60,7 +60,54 @@
 
 在下文源码中，会有在本次实验过程中使用的client和server的源代码
 
+## 3、xfs文件系统<br>
+### 3.1 xfs文件系统<br>
+  flash作为嵌入式系统的主要存储媒介，写入操作只能把对应的位置的1修改成0，而不能
+把0修改为1，一般情况下，向flash写入内容时，需要擦除对应的存储区间，这种擦除是以block为
+单位进行的。传统的文件系统如ext2、ntfs等都是针对机械式硬盘设计的，用作flash文件系统会
+有诸多弊端。<br>
+	xfs采用日志记录功能，每当发生文件系统更改，xfs都会将新属性信息记录到文件系统的保留区域内。
+只有元数据写入日志后，文件系统才能将实际数据写入到磁盘。<br>
+### 3.2 创建和挂载XFS文件系统<br>
+①首先，需要安装XFS系统工具集用以执行许多XFS相关的管理任务。
+（例如：格式化，扩展，修复，设置配额，改变参数等）<br>
+```bash
+sudo apt-get install xfsprogs 
+```
+②先在sd卡(/dev/mmcblk0)上准备一个分区来创建XFS。<br>
+```bash
+sudo fdisk /dev/mmcblk0
+```
+![分区](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/%E5%88%9B%E5%BB%BA%E5%88%86%E5%8C%BA.png)<br>
+③格式化分区为XFS，使用mkfs.xfs命令。
+如果已有其他文件系统创建在此分区，必须加上"-f"参数来覆盖它。<br>
+```bash
+sudo mkfs.xfs -f /dev/mmcblk0p5
+```
+④将文件系统挂载到/mnt/mmcblk0p5:<br>
+```bash
+sudo mount -t xfs /dev/mmcblk0p5 /mnt/mmcblk0p5
+```
+验证XFS挂载是否成功：<br>
+```bash
+ df -Th /mnt/mmcblk0p5
+```
+![挂载文件系统](https://github.com/yiyading/Embedded-software/blob/master/20200420_src/img/df-TH.png)<br>
+⑤加入下列行到/etc/fstab，启动时自动挂载XFS分区在/mnt/mmcblk0p5上：<br>
 
+/dev/mmcblk0p5 /mnt/mmcblk0p5 xfs defaults 0 0<br>
+## 4、GDB-GDBServer交叉调试<br>
+### 4.1交叉调试<vr>
+①首先在树莓派上运行gdbserver:
+```bash
+gdbserver :7788 myproj
+```
+②之后在host端运行arm-linux-gnueabihf-gcc
+```
+arm-linux-gnueabihf-gcc myproj
+```
+target remote 192.168.0.22:7788<br>
+continue<br>
 
 # 四、实验总结
 
