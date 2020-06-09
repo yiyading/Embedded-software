@@ -57,6 +57,7 @@
 **socket原理及例程点击下面链接**：
 
 [socket原理和例程点我](https://github.com/yiyading/day-read/tree/master/socket%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BE%8B%E7%A8%8B)
+socket原理以及实现流程：https://github.com/yiyading/Embedded-software/blob/master/socket%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E6%B5%81%E7%A8%8B.md
 
 在下文源码中，会有在本次实验过程中使用的client和server的源代码
 
